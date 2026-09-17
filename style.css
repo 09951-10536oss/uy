@@ -1,0 +1,611 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #050914;
+    color: white;
+    touch-action: none;
+    user-select: none;
+}
+
+
+/* =====================================
+   GAME CONTAINER
+===================================== */
+
+#game {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background:
+        linear-gradient(
+            180deg,
+            #08152a 0%,
+            #143e4a 45%,
+            #0b251d 100%
+        );
+}
+
+
+/* =====================================
+   SCREENS
+===================================== */
+
+.screen {
+    position: absolute;
+    inset: 0;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 20;
+}
+
+.screen.active {
+    display: flex;
+}
+
+
+/* =====================================
+   MENU
+===================================== */
+
+#menu {
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(48, 175, 125, 0.35),
+            transparent 40%
+        ),
+        linear-gradient(
+            180deg,
+            rgba(3, 15, 24, 0.75),
+            rgba(2, 7, 13, 0.94)
+        );
+}
+
+.menu-card,
+.gameover-card {
+    width: min(90%, 480px);
+
+    padding: 35px 28px;
+
+    text-align: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18, 38, 48, 0.92),
+            rgba(4, 12, 18, 0.94)
+        );
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.55),
+        inset 0 1px rgba(255, 255, 255, 0.08);
+
+    animation: menuAppear 0.8s ease;
+}
+
+@keyframes menuAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(35px) scale(0.94);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+/* =====================================
+   LOGO
+===================================== */
+
+.logo span {
+    display: block;
+
+    font-size: 60px;
+
+    margin-bottom: 8px;
+
+    animation: leafFloat 2s ease-in-out infinite;
+}
+
+@keyframes leafFloat {
+
+    0%,
+    100% {
+        transform: rotate(-5deg) translateY(0);
+    }
+
+    50% {
+        transform: rotate(5deg) translateY(-8px);
+    }
+
+}
+
+.logo h1 {
+    font-size: clamp(42px, 12vw, 72px);
+    line-height: 0.9;
+
+    letter-spacing: 5px;
+
+    color: #dfffe9;
+
+    text-shadow:
+        0 5px 0 #16563e,
+        0 12px 30px rgba(0, 0, 0, 0.6);
+}
+
+.logo h2 {
+    font-size: clamp(25px, 8vw, 42px);
+
+    letter-spacing: 12px;
+
+    color: #f5bd48;
+}
+
+.subtitle {
+    margin: 20px 0 28px;
+
+    color: #9db4b2;
+
+    letter-spacing: 4px;
+
+    font-size: 12px;
+}
+
+
+/* =====================================
+   BUTTONS
+===================================== */
+
+button {
+    border: none;
+    cursor: pointer;
+
+    font-family: inherit;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+.main-btn {
+    width: 100%;
+
+    padding: 16px 22px;
+
+    border-radius: 14px;
+
+    color: white;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    background:
+        linear-gradient(
+            135deg,
+            #25b878,
+            #087f61
+        );
+
+    box-shadow:
+        0 8px 25px rgba(14, 170, 113, 0.28);
+
+    transition: 0.15s;
+}
+
+.main-btn:hover {
+    transform: translateY(-2px);
+
+    filter: brightness(1.15);
+}
+
+.main-btn:active {
+    transform: scale(0.97);
+}
+
+
+.secondary-btn {
+    width: 100%;
+
+    margin-top: 12px;
+
+    padding: 13px;
+
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    color: #b8c8c7;
+
+    font-weight: bold;
+}
+
+
+/* =====================================
+   CONTROLS INFO
+===================================== */
+
+.controls-info {
+    margin-top: 25px;
+
+    color: #7e9995;
+
+    font-size: 12px;
+
+    line-height: 1.8;
+}
+
+
+/* =====================================
+   CANVAS
+===================================== */
+
+#gameCanvas {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+}
+
+
+/* =====================================
+   HUD
+===================================== */
+
+#hud {
+    position: absolute;
+
+    top: 15px;
+    left: 15px;
+    right: 15px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 8px;
+
+    pointer-events: none;
+
+    z-index: 5;
+}
+
+.hud-box {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    min-width: 85px;
+
+    padding: 8px 10px;
+
+    border-radius: 12px;
+
+    background: rgba(3, 12, 16, 0.58);
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    backdrop-filter: blur(8px);
+}
+
+.hud-box > span {
+    font-size: 20px;
+}
+
+.hud-box small {
+    display: block;
+
+    font-size: 8px;
+
+    color: #79908c;
+
+    letter-spacing: 1px;
+}
+
+.hud-box strong {
+    font-size: 14px;
+
+    color: white;
+}
+
+
+/* =====================================
+   POWER UP
+===================================== */
+
+#powerUp {
+    position: absolute;
+
+    top: 90px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: none;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 8px 14px;
+
+    border-radius: 30px;
+
+    background: rgba(255, 185, 45, 0.15);
+
+    border: 1px solid rgba(255, 202, 65, 0.45);
+
+    color: #ffd76a;
+
+    font-size: 12px;
+
+    z-index: 5;
+}
+
+
+/* =====================================
+   MOBILE CONTROLS
+===================================== */
+
+#mobileControls {
+    position: absolute;
+
+    left: 20px;
+    right: 20px;
+    bottom: 25px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    z-index: 10;
+}
+
+#mobileControls button {
+    width: 62px;
+    height: 62px;
+
+    border-radius: 50%;
+
+    color: white;
+
+    font-size: 25px;
+
+    background: rgba(5, 18, 22, 0.62);
+
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    backdrop-filter: blur(8px);
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+#mobileControls button:active {
+    transform: scale(0.88);
+
+    background: rgba(40, 170, 115, 0.65);
+}
+
+.vertical-controls {
+    display: flex;
+
+    gap: 10px;
+}
+
+
+/* =====================================
+   GAME OVER
+===================================== */
+
+#gameOver {
+    background: rgba(2, 6, 10, 0.72);
+
+    backdrop-filter: blur(6px);
+}
+
+.gameover-card {
+    max-width: 420px;
+}
+
+.skull {
+    font-size: 65px;
+
+    margin-bottom: 5px;
+
+    animation: skullShake 0.6s ease;
+}
+
+@keyframes skullShake {
+
+    0% {
+        transform: rotate(-8deg);
+    }
+
+    25% {
+        transform: rotate(8deg);
+    }
+
+    50% {
+        transform: rotate(-5deg);
+    }
+
+    75% {
+        transform: rotate(5deg);
+    }
+
+    100% {
+        transform: rotate(0);
+    }
+
+}
+
+.gameover-card h1 {
+    font-size: 42px;
+
+    letter-spacing: 4px;
+
+    color: #ffce67;
+}
+
+.reason {
+    margin-top: 8px;
+
+    color: #879b99;
+
+    font-size: 14px;
+}
+
+.results {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 8px;
+
+    margin: 25px 0;
+}
+
+.results div {
+    padding: 13px 5px;
+
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.055);
+}
+
+.results span {
+    display: block;
+
+    color: #708681;
+
+    font-size: 10px;
+
+    margin-bottom: 5px;
+}
+
+.results strong {
+    font-size: 17px;
+
+    color: #fff;
+}
+
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 500px) {
+
+    .hud-box {
+        min-width: auto;
+        padding: 7px;
+    }
+
+    .hud-box > span {
+        font-size: 17px;
+    }
+
+    .hud-box strong {
+        font-size: 12px;
+    }
+
+    #mobileControls button {
+        width: 58px;
+        height: 58px;
+    }
+
+    .menu-card,
+    .gameover-card {
+        padding: 28px 20px;
+    }
+
+}
+
+@media (min-width: 900px) {
+
+    #mobileControls {
+        opacity: 0.55;
+    }
+
+}
+
+
+/* =====================================
+   EFFECT CLASSES
+===================================== */
+
+.damage {
+    animation: damageFlash 0.25s;
+}
+
+@keyframes damageFlash {
+
+    0% {
+        filter: brightness(1);
+    }
+
+    50% {
+        filter: brightness(2);
+    }
+
+    100% {
+        filter: brightness(1);
+    }
+
+}
+
+.shake {
+    animation: screenShake 0.25s;
+}
+
+@keyframes screenShake {
+
+    0% {
+        transform: translate(0);
+    }
+
+    25% {
+        transform: translate(-5px, 4px);
+    }
+
+    50% {
+        transform: translate(5px, -4px);
+    }
+
+    75% {
+        transform: translate(-3px, -2px);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+
+}

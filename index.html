@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <title>Jungle Escape</title>
+
+    <!-- เชื่อม CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div id="game">
+
+    <!-- =========================
+         START MENU
+    ========================== -->
+
+    <section id="menu" class="screen active">
+
+        <div class="menu-card">
+
+            <div class="logo">
+                <span>🌴</span>
+                <h1>JUNGLE</h1>
+                <h2>ESCAPE</h2>
+            </div>
+
+            <p class="subtitle">
+                RUN • JUMP • SURVIVE
+            </p>
+
+            <button id="startBtn" class="main-btn">
+                ▶ START RUN
+            </button>
+
+            <div class="controls-info">
+                <p>⌨️ A / D หรือ ← / → : เปลี่ยนเลน</p>
+                <p>⬆️ W / Space : กระโดด</p>
+                <p>⬇️ S / ↓ : สไลด์</p>
+                <p>📱 ปัดซ้าย / ขวา / ขึ้น / ลง บนมือถือ</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         GAME SCREEN
+    ========================== -->
+
+    <section id="gameScreen" class="screen">
+
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- HUD -->
+
+        <div id="hud">
+
+            <div class="hud-box">
+                <span>🏃</span>
+                <div>
+                    <small>DISTANCE</small>
+                    <strong id="distance">0 m</strong>
+                </div>
+            </div>
+
+            <div class="hud-box">
+                <span>🪙</span>
+                <div>
+                    <small>COINS</small>
+                    <strong id="coins">0</strong>
+                </div>
+            </div>
+
+            <div class="hud-box">
+                <span>🏆</span>
+                <div>
+                    <small>BEST</small>
+                    <strong id="best">0 m</strong>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Power up indicator -->
+
+        <div id="powerUp">
+            <span id="powerIcon">⚡</span>
+            <span id="powerText">POWER</span>
+        </div>
+
+
+        <!-- Mobile Controls -->
+
+        <div id="mobileControls">
+
+            <button id="leftBtn">◀</button>
+
+            <div class="vertical-controls">
+                <button id="jumpBtn">▲</button>
+                <button id="slideBtn">▼</button>
+            </div>
+
+            <button id="rightBtn">▶</button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         GAME OVER
+    ========================== -->
+
+    <section id="gameOver" class="screen">
+
+        <div class="gameover-card">
+
+            <div class="skull">💀</div>
+
+            <h1>RUN OVER</h1>
+
+            <p class="reason" id="deathReason">
+                You hit an obstacle!
+            </p>
+
+            <div class="results">
+
+                <div>
+                    <span>Distance</span>
+                    <strong id="finalDistance">0 m</strong>
+                </div>
+
+                <div>
+                    <span>Coins</span>
+                    <strong id="finalCoins">0</strong>
+                </div>
+
+                <div>
+                    <span>Best</span>
+                    <strong id="finalBest">0 m</strong>
+                </div>
+
+            </div>
+
+            <button id="restartBtn" class="main-btn">
+                ↻ RUN AGAIN
+            </button>
+
+            <button id="menuBtn" class="secondary-btn">
+                MENU
+            </button>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<!-- เชื่อม JavaScript -->
+<script src="game.js"></script>
+
+</body>
+</html>
